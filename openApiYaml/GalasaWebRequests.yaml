@@ -7,43 +7,45 @@ servers:
   - url: 'http://{server}:{port}'
     variables:
       server:
-        default: cicsk8sm.hursley.ibm.com
+        default: localhost
       port:
-        default: 31410
+        default: 8080
 
 paths:
-  /propertystore:
+  /cps/{property}:
     get:
       summary: Get CPS Property
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CPSRequest'
+      parameters:
+        - name: property
+          in: path
+          description: Property Name
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Value of CPS Property
           content:
             application/json:
               schema:
-                type: string
-  /resultarchive:
-    post:
+                $ref: '#/components/schemas/CPSResponse'
+  /ras/{runName}:
+    get:
       summary: Get RAS info for a test
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RASRequest'
+      parameters:
+        - name: runName
+          in: path
+          description: Run Name
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: RAS Info
           content:
             application/json:
               schema:
-                type: any
+                $ref: '#/components/schemas/RASResponse'
   /runs/{id}:
     get:
       summary: Get Run Info
@@ -54,7 +56,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           description: Run Info
@@ -71,7 +72,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       requestBody:
         required: true
         content:
@@ -84,28 +84,20 @@ paths:
 
 components:
   schemas:
-    CPSRequest:
+    CPSResponse:
       properties:
-        namespace:
+        value:
           type: string
-        prefix:
+    RASResponse:
+      properties:
+        runlog:
           type: string
-        suffix:
-          type: string
-        infixes:
+        testStructure:
+          type: any
+        artifactFiles:
           type: array
           items:
             type: any
-      required:  
-        - namespace
-        - prefix
-        - suffix
-    RASRequest:
-      properties:
-        runName:
-          type: string
-      required:
-        - runName
     TestRuns:
       properties:
         complete:
