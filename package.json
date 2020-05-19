@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate-api": "rm -rf gen/api && openapi-generator generate -i openApiYaml/GalasaWebRequests.yaml --skip-validate-spec --generator-name typescript-node -o gen/api --config api.json && cd gen/api && npm install"
+    "generate-cps": "rm -rf cps && openapi-generator generate -i openApiYaml/GalasaCPS.yaml --skip-validate-spec --generator-name typescript-node -o cps --config cps-api.json && cd cps && npm install",
+    "generate-ras": "rm -rf ras && openapi-generator generate -i openApiYaml/GalasaRAS.yaml --skip-validate-spec --generator-name typescript-node -o ras --config ras-api.json && cd ras && npm install",
+    "generate-runs": "rm -rf runs && openapi-generator generate -i openApiYaml/GalasaRuns.yaml --skip-validate-spec --generator-name typescript-node -o runs --config runs-api.json && cd runs && npm install"
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",

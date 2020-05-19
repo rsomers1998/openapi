@@ -12,40 +12,6 @@ servers:
         default: 8080
 
 paths:
-  /cps/{property}:
-    get:
-      summary: Get CPS Property
-      parameters:
-        - name: property
-          in: path
-          description: Property Name
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Value of CPS Property
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CPSResponse'
-  /ras/{runName}:
-    get:
-      summary: Get RAS info for a test
-      parameters:
-        - name: runName
-          in: path
-          description: Run Name
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: RAS Info
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RASResponse'
   /runs/{id}:
     get:
       summary: Get Run Info
@@ -81,23 +47,9 @@ paths:
       responses:
         '200':
           description: Test Submitted
-
+        
 components:
   schemas:
-    CPSResponse:
-      properties:
-        value:
-          type: string
-    RASResponse:
-      properties:
-        runlog:
-          type: string
-        testStructure:
-          type: any
-        artifactFiles:
-          type: array
-          items:
-            type: any
     TestRuns:
       properties:
         complete:
@@ -128,4 +80,3 @@ components:
           type: any
         trace:
           type: boolean
-        
