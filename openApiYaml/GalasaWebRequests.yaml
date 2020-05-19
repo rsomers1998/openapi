@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: Galasa Web Requests
+  version: 0.0.1
+
+servers:
+  - url: 'http://{server}:{port}'
+    variables:
+      server:
+        default: cicsk8sm.hursley.ibm.com
+      port:
+        default: 31410
+
+paths:
+  /propertystore:
+    get:
+      summary: Get CPS Property
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CPSRequest'
+      responses:
+        '200':
+          description: Value of CPS Property
+          content:
+            application/json:
+              schema:
+                type: string
+  /resultarchive:
+    post:
+      summary: Get RAS info for a test
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RASRequest'
+      responses:
+        '200':
+          description: RAS Info
+          content:
+            application/json:
+              schema:
+                type: any
+  /runs/{id}:
+    get:
+      summary: Get Run Info
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Run Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRuns'
+    post:
+      summary: Start Test Runs
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunRequest'
+      responses:
+        '200':
+          description: Test Submitted
+
+components:
+  schemas:
+    CPSRequest:
+      properties:
+        namespace:
+          type: string
+        prefix:
+          type: string
+        suffix:
+          type: string
+        infixes:
+          type: array
+          items:
+            type: any
+      required:  
+        - namespace
+        - prefix
+        - suffix
+    RASRequest:
+      properties:
+        runName:
+          type: string
+      required:
+        - runName
+    TestRuns:
+      properties:
+        complete:
+          type: boolean
+        runs:
+          type: array
+          items:
+            type: any
+    TestRunRequest:
+      properties:
+        classNames:
+          type: array
+          items:
+            type: any
+        requestorType:
+          type: string
+        testStream:
+          type: string
+        obr:
+          type: string
+        mavenRepository:
+          type: string
+        sharedEnvironmentPhase:
+          type: string
+        sharedEnvironmentRunName:
+          type: string
+        overrides:
+          type: any
+        trace:
+          type: boolean
+        

@@ -1,0 +1,15 @@
+{
+  "name": "openapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-api": "rm -rf gen/api && openapi-generator generate -i openApiYaml/GalasaWebRequests.yaml --skip-validate-spec --generator-name typescript-node -o gen/api --config api.json && cd gen/api && npm install"
+  },
+  "dependencies": {
+    "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
+    "galasa-web-api": "^1.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
